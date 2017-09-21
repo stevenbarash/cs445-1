@@ -54,10 +54,6 @@ public class A1Help {
         // Print it out
         System.out.println("myCards " + myCards.toString());
 
-        System.out.println("DE BIIUG$EWGWEG" + myCards.size());
-
-        myCards.PRINTALLSTUFF();
-
         // Move two into the other one
         otherCards.addItem(myCards.removeItem());
         otherCards.addItem(myCards.removeItem());

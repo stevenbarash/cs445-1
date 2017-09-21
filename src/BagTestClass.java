@@ -1,6 +1,17 @@
 public class BagTestClass {
+    static MultiDS<String> bag = new MultiDS<>(4);
+
     public static void main(String[] args) {
-        MultiDS<String> bag = new MultiDS<>(4);
+
+        bag.addItem("1");
+        bag.addItem("2");
+        bag.addItem("3");
+        bag.addItem("4");
+
+        bag.reverse();
+
+        bag.PRINTALLSTUFF();
+        /*
         bag.addItem("Test1");
         bag.addItem("Test2");
         bag.addItem("test3");
@@ -15,6 +26,9 @@ public class BagTestClass {
         System.out.println("");
 
         bag.PRINTALLSTUFF();
+*/
+    }
 
+    public static void testRemove() {
     }
 }

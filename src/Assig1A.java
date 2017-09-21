@@ -52,6 +52,7 @@ public class Assig1A {
         int sz = theQ2.size();
         System.out.println("There are " + sz + " items in the buffer");
 
+
         // This code will test the toString() method and the Reorder
         // interface.
         System.out.println("\nAbout to test Reorder methods");
@@ -97,5 +98,6 @@ public class Assig1A {
         System.out.println("Shuffling again");
         newDS.shuffle();
         System.out.println(newDS.toString());
+
     }
 }

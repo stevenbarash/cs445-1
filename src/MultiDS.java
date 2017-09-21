@@ -1,4 +1,9 @@
+import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Random;
+
 public class MultiDS<T> implements PrimQ<T>, Reorder {
     // Add a new Object to the PrimQ<T> in the next available location.  If
     // all goes well, return true.  If there is no room in the PrimQ for
@@ -27,8 +32,15 @@ public class MultiDS<T> implements PrimQ<T>, Reorder {
     public T removeItem() {
         T deletedValue = bag[0];
         shiftLeft();
-        bag[numberOfEntries - 1] = null;
-        return deletedValue;
+        if (numberOfEntries != 0) {
+            bag[numberOfEntries - 1] = null;
+        }
+        if (deletedValue != null) {
+            numberOfEntries--;
+            return deletedValue;
+        } else {
+            return null;
+        }
     }
 
     // Returns the "oldest" item in the PrimQ.  If the PrimQ
@@ -65,7 +77,7 @@ public class MultiDS<T> implements PrimQ<T>, Reorder {
     @Override
 
     public int size() {
-        return bagSize;
+        return numberOfEntries;
     }
 
     // Reset the PrimQ to empty status by reinitializing the variables
@@ -84,14 +96,31 @@ public class MultiDS<T> implements PrimQ<T>, Reorder {
     // many different ways, depending upon how you actually implemented
     // your physical MultiDS<T> class
     public void reverse() {
-
+        Collections.reverse(Arrays.asList(bag));
     }
 
     // Remove the logical last item of the DS and put it at the
     // front.  As with reverse(), this can be done physically in
     // different ways depending on the underlying implementation.
     public void shiftRight() {
+        tempBag = (T[]) new Object[numberOfEntries];
+        for (int i = bag.length - 1; i >= 0; --i) {
+            if (bag[i] != null) {
+                tempBag[i] = bag[i];
+            }
+        }
+        T itemBeingMoved = bag[0];
+        for (int i = 0; i > maxCapacity; i++) {
+            try {
+                if (bag[i] != null) {
+                    System.arraycopy(tempBag, i + 1, bag, i, 1);
 
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+            }
+
+            bag[numberOfEntries - 1] = itemBeingMoved;
+        }
     }
 
 
@@ -107,8 +136,11 @@ public class MultiDS<T> implements PrimQ<T>, Reorder {
 
         tempBag = (T[]) new Object[numberOfEntries];
         for (int i = bag.length - 1; i >= 0; --i) {
-            if (bag[i] != null) {
-                tempBag[i] = bag[i];
+            try {
+                if (bag[i] != null) {
+                    tempBag[i] = bag[i];
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
             }
         }
         T itemBeingMoved = bag[0];
@@ -121,14 +153,29 @@ public class MultiDS<T> implements PrimQ<T>, Reorder {
             } catch (ArrayIndexOutOfBoundsException e) {
             }
 
-            bag[numberOfEntries - 1] = itemBeingMoved;
+            if (numberOfEntries != 0) {
+                bag[numberOfEntries - 1] = itemBeingMoved;
+            }
         }
     }
 
 
     public void shuffle() {
+        Random rand = new Random();
+        Collections.shuffle(Arrays.asList(bag), rand);
 
     }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (T t : bag) {
+            if (t != null) {
+                sb.append(t.toString() + " ");
+            }
+        }
+        return sb.toString();
+    }
+
     // Reorganize the items in the object in a pseudo-random way.  The exact
     // way is up to you but it should utilize a Random object (see Random in
     // the Java API).  Thus, after this operation the "oldest" item in the
