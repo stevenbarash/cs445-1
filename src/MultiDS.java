@@ -103,24 +103,27 @@ public class MultiDS<T> implements PrimQ<T>, Reorder {
     // front.  As with reverse(), this can be done physically in
     // different ways depending on the underlying implementation.
     public void shiftRight() {
-        tempBag = (T[]) new Object[numberOfEntries];
-        for (int i = bag.length - 1; i >= 0; --i) {
-            if (bag[i] != null) {
-                tempBag[i] = bag[i];
+        Collections.rotate(Arrays.asList(bag), numberOfEntries * -1);
+        StringBuilder sb = new StringBuilder();
+        for (T t : bag) {
+            if (t != null) {
+                sb.append(t.toString() + " ");
+
             }
         }
-        T itemBeingMoved = bag[0];
-        for (int i = 0; i > maxCapacity; i++) {
-            try {
-                if (bag[i] != null) {
-                    System.arraycopy(tempBag, i + 1, bag, i, 1);
+        System.out.println(sb.toString()); //TODO find out why dis dont work
 
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
+        System.out.println("\nFirst \n"); //TODO find out why dis dont work
+        Collections.rotate(Arrays.asList(bag), numberOfEntries * -1);
+        for (T t : bag) {
+            if (t != null) {
+                sb.append(t.toString() + " ");
+
             }
-
-            bag[numberOfEntries - 1] = itemBeingMoved;
         }
+        System.out.println(sb.toString()); //TODO find out why dis dont work
+
+
     }
 
 
@@ -133,7 +136,30 @@ public class MultiDS<T> implements PrimQ<T>, Reorder {
     // Remove the logical first item of the DS and put it at the
     // end.  As above, this can be done in different ways.
     public void shiftLeft() {
+        Collections.rotate(Arrays.asList(bag), numberOfEntries);
 
+        StringBuilder sb = new StringBuilder();
+        System.out.println("\nDEBug\n"); //TODO find out why dis dont work
+
+        for (T t : bag) {
+            if (t != null) {
+                sb.append(t.toString() + " ");
+
+            }
+        }
+        System.out.println(sb.toString()); //TODO find out why dis dont work
+
+        Collections.rotate(Arrays.asList(bag), numberOfEntries);
+        System.out.println("\nDEBug\n"); //TODO find out why dis dont work
+        for (T t : bag) {
+            if (t != null) {
+                sb.append(t.toString() + " ");
+
+            }
+        }
+        System.out.println(sb.toString()); //TODO find out why dis dont work
+
+/*
         tempBag = (T[]) new Object[numberOfEntries];
         for (int i = bag.length - 1; i >= 0; --i) {
             try {
@@ -157,6 +183,7 @@ public class MultiDS<T> implements PrimQ<T>, Reorder {
                 bag[numberOfEntries - 1] = itemBeingMoved;
             }
         }
+        */
     }
 
 
@@ -171,11 +198,11 @@ public class MultiDS<T> implements PrimQ<T>, Reorder {
         for (T t : bag) {
             if (t != null) {
                 sb.append(t.toString() + " ");
+
             }
         }
         return sb.toString();
     }
-
     // Reorganize the items in the object in a pseudo-random way.  The exact
     // way is up to you but it should utilize a Random object (see Random in
     // the Java API).  Thus, after this operation the "oldest" item in the

@@ -1,6 +1,9 @@
 public class Snap {
     public static void main(String[] args) {
         MultiDS<Card> deck = new MultiDS<>(52);
+        MultiDS<Card> player1 = new MultiDS<>(52);
+        MultiDS<Card> player2 = new MultiDS<>(52);
+
 
         //create deck
 
@@ -117,7 +120,17 @@ public class Snap {
         deck.addItem(sk);
         deck.addItem(sa);
 
-
+        deck.shuffle();
         System.out.println(deck.toString());
+
+        for (int i = 0; i < 26; i++) {
+            player1.addItem(deck.removeItem());
+        }
+        for (int i = 0; i < 26; i++) {
+            player2.addItem(deck.removeItem());
+        }
+        System.out.println(player1.toString());
+        System.out.println(player2.toString());
+
     }
 }
