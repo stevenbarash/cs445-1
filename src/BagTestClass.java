@@ -8,8 +8,8 @@ public class BagTestClass {
         bag.addItem("3");
         bag.addItem("4");
 
-        bag.reverse();
-
+        bag.PRINTALLSTUFF();
+        bag.shiftRight();
         bag.PRINTALLSTUFF();
         /*
         bag.addItem("Test1");

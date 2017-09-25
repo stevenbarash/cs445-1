@@ -86,6 +86,7 @@ public class MultiDS<T> implements PrimQ<T>, Reorder {
     public void clear() {
         for (int i = 0; i <= numberOfEntries; i++) {
             bag[i] = null;
+
         }
         numberOfEntries = 0;
     }
@@ -103,7 +104,31 @@ public class MultiDS<T> implements PrimQ<T>, Reorder {
     // front.  As with reverse(), this can be done physically in
     // different ways depending on the underlying implementation.
     public void shiftRight() {
-        Collections.rotate(Arrays.asList(bag), numberOfEntries * -1);
+        // get last index of array
+        int lastIndex = bag.length - 1;
+        // save last element
+        T oldLast = bag[lastIndex];
+
+        // copy the elements from  left to right
+        for (int i = lastIndex; i != 0; i--)
+            bag[i] = bag[i - 1];
+
+        // put the last element first
+        bag[0] = oldLast;
+        /*
+       Collections.rotate(Arrays.asList(bag), 1);
+/*
+        T lastItem = bag[numberOfEntries-1];
+        for(int i = numberOfEntries - 1; i > 0; i--) {
+            bag[i] = bag[i - 1];
+            for (T t : bag) {
+               // System.out.print(t +" ");
+            }
+            System.out.println();
+        }
+
+        bag[0] = lastItem;
+        /*
         StringBuilder sb = new StringBuilder();
         for (T t : bag) {
             if (t != null) {
@@ -122,45 +147,53 @@ public class MultiDS<T> implements PrimQ<T>, Reorder {
             }
         }
         System.out.println(sb.toString()); //TODO find out why dis dont work
-
+*/
 
     }
 
 
     public void PRINTALLSTUFF() {
         for (T t : bag) {
-            System.out.println(t);
+            System.out.print(t + " ");
         }
+        System.out.println();
     }
 
     // Remove the logical first item of the DS and put it at the
     // end.  As above, this can be done in different ways.
     public void shiftLeft() {
-        Collections.rotate(Arrays.asList(bag), numberOfEntries);
+        //Collections.rotate(Arrays.asList(bag),numberOfEntries);
+        //Collections.rotate(Arrays.asList(bag),numberOfEntries);
 
-        StringBuilder sb = new StringBuilder();
-        System.out.println("\nDEBug\n"); //TODO find out why dis dont work
+        // get last index of array
+        int lastIndex = bag.length - 1;
+        // save first element
+        T oldFirst = bag[0];
 
-        for (T t : bag) {
-            if (t != null) {
-                sb.append(t.toString() + " ");
+        // copy the elements from  right to left
+        for (int i = 0; i < lastIndex; i++)
+            bag[i] = bag[i + 1];
 
-            }
-        }
-        System.out.println(sb.toString()); //TODO find out why dis dont work
+        // put the first element last
+        bag[lastIndex] = oldFirst;
 
-        Collections.rotate(Arrays.asList(bag), numberOfEntries);
-        System.out.println("\nDEBug\n"); //TODO find out why dis dont work
-        for (T t : bag) {
-            if (t != null) {
-                sb.append(t.toString() + " ");
+        /*
+        tempBag = (T[]) new Object[100];
+            System.arraycopy(bag, 0, tempBag, 1,numberOfEntries);
 
-            }
-        }
-        System.out.println(sb.toString()); //TODO find out why dis dont work
-
+        bag = tempBag;
 /*
-        tempBag = (T[]) new Object[numberOfEntries];
+
+        T firstItem = bag[0];
+
+
+        for(int i = 2; i <= bag.length-1; i++) { //copies contents of bag into tempBag
+            tempBag[i] = bag[i-1];
+        }
+
+        bag[--numberOfEntries] = firstItem;
+        /*
+        tempBag = (T[]) new Object[ ];
         for (int i = bag.length - 1; i >= 0; --i) {
             try {
                 if (bag[i] != null) {
@@ -183,7 +216,7 @@ public class MultiDS<T> implements PrimQ<T>, Reorder {
                 bag[numberOfEntries - 1] = itemBeingMoved;
             }
         }
-        */
+*/
     }
 
 

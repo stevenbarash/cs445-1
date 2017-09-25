@@ -132,5 +132,8 @@ public class Snap {
         System.out.println(player1.toString());
         System.out.println(player2.toString());
 
+        System.out.println(player1.size());
+        System.out.println(player2.size());
+
     }
 }
